@@ -3,19 +3,15 @@ import pygame
 class Engine:
     def __init__(self, config):
 
-        config.get('Display', 'caption'),
-        config.getint('Display', 'width'),
-        config.getint('Display', 'height'),
-        config.getint('Display', 'framerate')
-
         pygame.init()
+
         self.display = pygame.display.set_mode((config.getint('Display', 'width'),
                                                 config.getint('Display', 'height')))
         pygame.display.set_caption(config.get('Display', 'caption'))
         pygame.mouse.set_visible(0)
 
         self.entities = []
-        self.framerate = config.getint('Display', 'framerate')
+        self.framerate = config.getint('Game', 'framerate')
         self.clock = pygame.time.Clock()
         self.show_fps = config.getboolean('Display', 'show_fps')
 
@@ -45,4 +41,4 @@ class Engine:
             entity.tick()
             self.display.blit(entity.surface, entity.rect)
 
-        pygame.display.flip()
+        pygame.display.update(self.entities)
